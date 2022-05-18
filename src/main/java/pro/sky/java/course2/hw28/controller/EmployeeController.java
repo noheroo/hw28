@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.java.course2.hw28.data.Employee;
 import pro.sky.java.course2.hw28.services.EmployeeService;
+import pro.sky.java.course2.hw28.services.EmployeeServiceImpl;
 
 import java.util.Map;
-
 
 @RestController
 @RequestMapping("/employee")
@@ -16,13 +16,16 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping("/add")
-    public String addEmployee(@RequestParam String lastname, @RequestParam String firstname) {
-        employeeService.addEmployee(lastname, firstname);
+    public String addEmployee(@RequestParam String lastname,
+                              @RequestParam String firstname,
+                              @RequestParam int salary,
+                              @RequestParam int department) {
+        employeeService.addEmployee(lastname, firstname, salary, department);
         return "Employee added";
     }
 
