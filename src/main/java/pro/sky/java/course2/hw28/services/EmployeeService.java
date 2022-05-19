@@ -1,48 +1,25 @@
 package pro.sky.java.course2.hw28.services;
 
-import org.springframework.stereotype.Service;
 import pro.sky.java.course2.hw28.data.Employee;
-import pro.sky.java.course2.hw28.exeptions.EmployeeNotFoundException;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-@Service
-public class EmployeeService {
-    private final Map<String, Employee> employees;
+public interface EmployeeService {
+    void addEmployee(String lastName, String firstName, int salary, int department);
 
-    public EmployeeService() {
-        this.employees = new HashMap<>();
-    }
+    void removeEmployee(String lastName, String firstName);
 
+    Employee findEmployee(String lastName, String firstName);
 
-    public void addEmployee(String lastName, String firstName) {
-        Employee employee = new Employee(lastName, firstName);
-        employees.put(createKey(lastName, firstName), employee);
-    }
+    Map<String, Employee> printEmployees();
 
-    public void removeEmployee(String lastName, String firstName) {
-        if (!employees.containsKey(createKey(lastName, firstName))) {
-            throw new EmployeeNotFoundException();
-        }
-        employees.remove(createKey(lastName, firstName));
-    }
+    Optional<Employee>  getEmployeeInDepartmentMinSalary(int department);
 
-    public Employee findEmployee(String lastName, String firstName) {
-        if (!employees.containsKey(createKey(lastName, firstName))) {
-            throw new EmployeeNotFoundException();
-        }
-        return employees.get(createKey(lastName, firstName));
-    }
+    Optional<Employee> getEmployeeInDepartmentMaxSalary(int department);
 
-    public Map<String,Employee> printEmployees() {
-        return employees;
-    }
+    List<Employee> printEmployeesInDepartment(int department);
 
-    private String createKey(String lastName, String firstName) {
-        return lastName + firstName;
-    }
-
+    List<Employee> printEmployeesDepartment();
 }
-
-
